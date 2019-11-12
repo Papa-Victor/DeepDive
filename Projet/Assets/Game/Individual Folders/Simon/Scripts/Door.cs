@@ -34,7 +34,7 @@ public class Door : Station
 
     public override void Interact(PlayerController pc)
     {
-        pc.ChangeState(UsingDoorPlayerState.GetInstance());
+        pc.ChangeState(UsingDoorPlayerState.GetInstance(this));
         Audio.Play();
         Destination.SetActive(true);
         Current.SetActive(false);

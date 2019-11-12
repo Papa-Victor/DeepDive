@@ -8,10 +8,13 @@ public class UsingDoorPlayerState : State<PlayerController>
 
     protected static UsingDoorPlayerState instance = new UsingDoorPlayerState();
 
+    protected static Door currentDoor;
+
     private static PlayerController player;
 
-    public static UsingDoorPlayerState GetInstance()
+    public static UsingDoorPlayerState GetInstance(Door door)
     {
+        currentDoor = door;
         return instance;
     }
 
@@ -19,8 +22,8 @@ public class UsingDoorPlayerState : State<PlayerController>
     {
         player.SuspendActivity();
         UsingDoorPlayerState.player = player;
-        Door door = (Door) player.GetComponent<PlayerStationHandler>().GetHighlightStation();
-        door.Subscribe_Level_Loaded(LevelLoaded);
+        //Door door = (Door) player.GetComponent<PlayerStationHandler>().GetHighlightStation();
+        currentDoor.Subscribe_Level_Loaded(LevelLoaded);
     }
 
     public override void Execute(PlayerController player)
@@ -29,9 +32,11 @@ public class UsingDoorPlayerState : State<PlayerController>
 
     public override void ExitState(PlayerController player)
     {
-        Door door = (Door)player.GetComponent<PlayerStationHandler>().GetHighlightStation();
-        door.Unsubscribe_Level_Loaded(LevelLoaded);
+        //PlayerStationHandler playerStationHandler = player.GetComponent<PlayerStationHandler>();
+        //Door door = (Door)playerStationHandler.GetHighlightStation();
+        currentDoor.Unsubscribe_Level_Loaded(LevelLoaded);
         UsingDoorPlayerState.player = null;
+        currentDoor = null;
         player.ResumeActivity();
     }
 

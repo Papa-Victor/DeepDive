@@ -8,6 +8,7 @@ public class PlayerStationHandler : MonoBehaviour
     [SerializeField, ReadOnly]
     private Station highlightStation = null;
     private Station actStation;
+    private Station LastHighlightedStation;
 
     private PlayerController pc = null;
 
